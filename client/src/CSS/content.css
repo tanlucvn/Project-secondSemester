@@ -1,0 +1,45 @@
+.portfolio {
+    background: #f9f9f9;
+    padding: 80px 0;
+ }
+ 
+ .portfolio .content {
+    text-align: center;
+ }
+ 
+ .portfolio .content h1 {
+    color: #3c3c3c;
+    font-size: 2em;
+    margin-bottom: 50px;
+ }
+ 
+ .portfolio .content .projects {
+    width: 100%;
+ }
+ 
+ .portfolio .content .projects .project {
+    color: #fff;
+    position: relative;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 10%;
+    overflow: hidden;
+ }
+ 
+ .portfolio .content .projects .project:last-child {
+    margin-bottom: 0;
+ }
+ 
+ .portfolio .content .projects .project .project-image img {
+    width: 100%;
+ }
+ 
+ .portfolio .content .projects .project .project-title {
+    color: #3c3c3c;
+    padding: 10px 0;
+ }
+ 
+ .portfolio .content .projects .project .project-description {
+    color: #444;
+ }

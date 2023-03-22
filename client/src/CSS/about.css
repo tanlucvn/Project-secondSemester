@@ -1,0 +1,197 @@
+#about{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+pb-0, pb-sm-0, pb-md-0, pb-lg-0, pb-xl-0{
+    padding-bottom: 0 !important;
+}
+
+.jumbotron{
+    padding: 1rem .5rem;
+}
+
+pb-1, pb-sm-1, pb-md-1, pb-lg-1, pb-xl-1{
+    padding-bottom: .25rem !important;
+}
+
+pb-2, pb-sm-2, pb-md-2, pb-lg-2, pb-xl-2{
+    padding-bottom: .5rem !important;
+}
+
+pb-3, pb-sm-3, pb-md-3, pb-lg-3, pb-xl-3{
+    padding-bottom: .75rem !important;
+}
+
+pb-4, pb-sm-4, pb-md-4, pb-lg-4, pb-xl-4{
+    padding-bottom: 1rem !important;
+}
+
+pb-5, pb-sm-5, pb-md-5, pb-lg-5, pb-xl-5{
+    padding-bottom: 1.25rem !important;
+}
+
+pb-5rem, pb-sm-5rem, pb-md-5rem, pb-lg-5rem, pb-xl-5rem{
+    padding-bottom: 5rem !important;
+}
+
+
+.container-inner {
+    border-radius: 50%;
+    height: 312px;
+    -webkit-tap-highlight-color: transparent;
+    transform: scale(0.48);
+    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    width: 400px;
+  }
+
+  .container-inner:hover {
+    transform: scale(0.54);
+  } 
+/*   .container-inner {
+    clip-path: path(
+      "M 390,400 C 390,504.9341 304.9341,590 200,590 95.065898,590 10,504.9341 10,400 V 10 H 200 390 Z"
+    );
+    position: relative;
+    transform-origin: 50%;
+    top: -200px;
+  } */
+/*   .circle {
+    background-color: #fee7d3;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 380px;
+    left: 10px;
+    pointer-events: none;
+    position: absolute;
+    top: 210px;
+    width: 380px;
+  } */
+  .card-about {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+    transition-delay: 0.5s;
+  }
+  .card-about:hover {
+    width: 600px;
+    transition-delay: 0.5s;
+  }
+  .card-about .circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .card-about .circle::before {
+    content: "";
+    position: absolute;
+    top: 30;
+    left: 2;
+    right: 2;
+    width: 470px;
+    height: 470px;
+    border-radius: 50%;
+    background: #191919;
+    border: 8px solid var(--clr);
+    filter: drop-shadow(0 0 10px var(--clr)) drop-shadow(0 0 60px var(--clr));
+    transition: 0.5s, background 0.5s;
+    transition-delay: 0.75s, 1s;
+  }
+  .card-about:hover .circle::before {
+    transition-delay: 0.5s;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background: var(--clr);
+  }
+  .card-about .circle .logo {
+    position: relative;
+    width: 250px;
+    transition: 0.5s;
+    transition-delay: 0.5s;
+    border-radius: 20%;
+  }
+  .card-about:hover .circle .logo {
+    transform: scale(0);
+    transition-delay: 0s;
+  }
+  .card-about .product_img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0) rotate(315deg);
+    height: 200px;
+    transition: 0.5s ease-in-out;
+    border-radius: 50%;
+  }
+  .card-about:hover .product_img {
+    transition-delay: 0.75s;
+    top: 55%;
+    left: 82%;
+    height: 320px;
+    transform: translate(-50%, -50%) scale(1) rotate(15deg);
+  }
+  .card-about .content {
+    position: absolute;
+    width: 60%;
+    left: 10%;
+    padding: 20px 20px 20px 20px;
+    opacity: 0;
+    transition: 0.5s;
+    visibility: hidden;
+  }
+  .card-about:hover .content {
+    transition-delay: 0.75s;
+    opacity: 1;
+    visibility: visible;
+    left: 3px;
+    margin-top: 15px;
+  }
+  .card-about .content h2 {
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 2em;
+    line-height: 1.3em;
+  }
+  .card-about .content p {
+    color: #fff;
+  }
+  .card-about .content a {
+    position: relative;
+    color: #fff;
+    background: #222222;
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 15px;
+  }
+  
+@media screen and (max-width: 768px) {
+
+}
+
+@media screen and (max-width: 576px) {
+
+}
+
+@media screen and (max-width: 480px) {
+    .jumbotron{
+          padding: .5rem .25rem;
+    }
+}
+    

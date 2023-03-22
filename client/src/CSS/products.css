@@ -1,0 +1,52 @@
+@property --rotate {
+  syntax: "<angle>";
+  initial-value: 132deg;
+  inherits: false;
+}
+@import url("https://fonts.googleapis.com/css2?family=Italiana&family=Open+Sans:wght@300&family=Reem+Kufi&display=swap");
+
+.card-1 {
+  background: #fff;
+  width: var(--card-width);
+  height: var(--card-height);
+  padding: 3px;
+  position: relative;
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  font-size: 1.5em;
+  color: rgb(88 199 250 / 0%);
+  font-family: "Prata", serif;
+}
+
+.card-1:hover {
+  color: rgb(0, 0, 0);
+  transition: color 1s;
+  font-family: "Prata", serif;
+}
+.card-1:hover:before,
+.card-1:hover:after {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  display: contents;
+}
+a :hover {
+  text-decoration: none;
+  color: rgb(163, 162, 162);
+}

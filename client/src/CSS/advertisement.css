@@ -1,0 +1,166 @@
+@import url("https://fonts.googleapis.com/css2?family=Prata&display=swap");
+/* * {
+  position: relative;
+  box-sizing: border-box;
+} */
+
+/* .iframely-embed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  background: white;
+}
+ */
+/* #app {
+  z-index: 100;
+}
+ */
+#app:hover {
+  opacity: 0.5;
+}
+
+#app {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background: #0a0a0a;
+  color: #464242;
+}
+
+/* body {
+  display: grid;
+  padding: 3vmin;
+  background: #e6ded7;
+} */
+
+.title {
+  padding-left: 0.5em;
+  grid-column: 1 / -1;
+  grid-row: 1;
+  font-family: "Prata", serif;
+  font-size: 8vw;
+  width: 100%;
+  z-index: 2;
+  color: white;
+}
+
+.title > .title-inner {
+  display: inline-block;
+}
+
+@keyframes text-clip {
+  from {
+    clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes outer-left {
+  from {
+    transform: translateX(50%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes inner-left {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.cafe,
+.mozart {
+  animation: outer-left 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
+  color: white;
+}
+
+.title-inner {
+  display: inline-block;
+  animation: inner-left 1s 1s ease both;
+}
+
+.cafe-inner {
+  display: inline-block;
+  animation: inner-left 1s 1s ease both,
+    text-clip 1s 0s cubic-bezier(0.5, 0, 0.1, 1) both;
+  font-size: 80px;
+}
+
+.mozart-inner {
+  animation: text-clip 1s 0s cubic-bezier(0.5, 0, 0.1, 1) both;
+  font-size: 80px;
+}
+
+.title {
+  animation: outer-left 1s 1s ease both;
+}
+
+.cafe > .cafe-inner {
+  display: inline-block;
+}
+
+.mozart {
+  display: inline-block;
+}
+
+.image {
+  grid-row: 1;
+  grid-column: 2;
+  margin-left: -2rem;
+  opacity: 0.7;
+  animation: image-in 1s cubic-bezier(0.5, 0, 0.1, 1) 2s backwards;
+}
+
+@keyframes image-in {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+.image img {
+  display: block;
+  width: 100%;
+}
+
+#app:active * {
+  animation: none !important;
+}
+
+@media (max-width: 980px) {
+  .cafe-inner {
+    font-size: 50px;
+  }
+  .mozart-inner {
+    font-size: 50px;
+  }
+  .col {
+    display: block;
+  }
+}
+
+@media (max-width: 640px) {
+  .cafe-inner {
+    font-size: 30px;
+  }
+  .mozart-inner {
+    font-size: 30px;
+  }
+  .col {
+    display: block;
+  }
+}
