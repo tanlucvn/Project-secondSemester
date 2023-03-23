@@ -136,7 +136,7 @@ export default function SearchScreen() {
       <Helmet>
         <title>Search Products</title>
       </Helmet>
-      <Box sx={{ mt: "120px" }}>
+      <Box>
         <Grid container spacing="2">
           <Grid item xs={4}>
             <h3>Department</h3>

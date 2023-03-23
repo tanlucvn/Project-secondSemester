@@ -76,7 +76,7 @@ export default function ProfileScreen() {
   };
 
   return (
-    <Container component="main" maxWidth="xs" sx={{ mt: "120px" }}>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
         sx={{

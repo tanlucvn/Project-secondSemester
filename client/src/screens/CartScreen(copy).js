@@ -21,7 +21,6 @@ import {
   useTheme,
   Divider,
   Chip,
-  Paper,
 } from "@mui/material";
 import {
   AddCircle,
@@ -132,13 +131,46 @@ export default function CartScreen() {
   }
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={8}>
-        <Paper>Test</Paper>
-      </Grid>
-      <Grid item xs={4}>
-        <Paper>test</Paper>
-      </Grid>
-    </Grid>
+    <Box sx={{ flexGrow: 1, mt: "100px" }}>
+      <Card sx={{ maxWidth: 1000, margin: "auto", mt: 5 }}>
+        <CardHeader title="Shopping Cart" />
+        <CardContent>
+          {cartItems.length === 0 ? (
+            <Typography>
+              Your cart is empty. <Link to="/">Go shopping</Link>
+            </Typography>
+          ) : (
+            <List>
+              {cartItems.map((item) => (
+                <CardItems
+                  name={item.name}
+                  image={item.image}
+                  price={item.price}
+                  description={item.description}
+                  category={item.category}
+                  createdAt={item.createdAt}
+                  quantity={item.quantity}
+                  item={item}
+                />
+              ))}
+            </List>
+          )}
+          <Grid container justifyContent="space-between">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={checkoutHandler}
+              disabled={cartItems.length === 0}
+            >
+              Proceed to Checkout
+            </Button>
+            <Typography variant="h6">
+              Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)} items):
+              ${cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
+            </Typography>
+          </Grid>
+        </CardContent>
+      </Card>
+    </Box>
   );
 }

@@ -24,30 +24,15 @@ import { MenuOutlined } from "@mui/icons-material";
 import { SearchOutlined, ShoppingBagOutlined } from "@mui/icons-material";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 
-function stringToColor(string) {
-  let hash = 0;
-  let i;
-
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  let color = "#";
-
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.slice(-2);
-  }
-
-  return color;
-}
-
 function stringAvatar(name) {
+  const nameParts = name.split(" ");
+  const initials =
+    nameParts.length >= 2
+      ? `${nameParts[0][0]}${nameParts[1][0]}`
+      : `${name[0]}`;
+
   return {
-    sx: {
-      bgcolor: stringToColor(name),
-    },
-    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+    children: initials,
   };
 }
 
@@ -109,15 +94,8 @@ export default function NavHeader() {
             minHeight: { xs: 80 },
           }}
         >
-          <Typography component="a" href="/">
-            <Box
-              sx={{
-                display: { xs: "none", md: "flex" },
-              }}
-              component="img"
-              alt="logo"
-              src="/logo.png"
-            />
+          <Typography component="a" href="/" variant="h4" fontWeight="bold">
+            LUDU
           </Typography>
           {/* mobile header */}
           <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
@@ -170,7 +148,7 @@ export default function NavHeader() {
             sx={{
               flexGrow: 1,
               display: { xs: "none", md: "flex" },
-              ml: { xs: 4, lg: 14 },
+              ml: { xs: 4, lg: 10 },
             }}
           >
             <Button
@@ -181,9 +159,39 @@ export default function NavHeader() {
                 pr: 2,
                 textTransform: "none",
                 fontSize: "1.12rem",
+                color: "black",
+                border: "2px solid black",
               }}
             >
-              Contact Us
+              Home
+            </Button>
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{
+                display: "block",
+                pl: 2,
+                pr: 2,
+                ml: 2,
+                textTransform: "none",
+                fontSize: "1.12rem",
+                color: "black",
+              }}
+            >
+              Home2
+            </Button>
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{
+                display: "block",
+                pl: 2,
+                pr: 2,
+                ml: 2,
+                textTransform: "none",
+                fontSize: "1.12rem",
+                color: "black",
+              }}
+            >
+              Home3
             </Button>
           </Box>
 
@@ -223,7 +231,10 @@ export default function NavHeader() {
                   onClick={handleOpenUserMenu}
                   sx={{ p: 0, ml: 2, mr: 1 }}
                 >
-                  <Avatar {...stringAvatar(user.name)} />
+                  <Avatar
+                    {...stringAvatar(user.name)}
+                    sx={{ backgroundColor: "black" }}
+                  />
                 </IconButton>
               </Tooltip>
               <Typography>{user.name}</Typography>
@@ -243,13 +254,15 @@ export default function NavHeader() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem onClick={() => navigate("/shipping")}>
-                  <Typography
-                    sx={{ alignItems: "center", display: "flex", p: "1rem" }}
-                  >
-                    <LocalAtmIcon />
-                    {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
-                  </Typography>
+                <MenuItem sx={{ display: "flex", justifyContent: "center" }}>
+                  <Avatar
+                    {...stringAvatar(user.name)}
+                    sx={{
+                      backgroundColor: "black",
+                      width: "200px",
+                      height: "200px",
+                    }}
+                  />
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={() => navigate("/profile")}>
@@ -261,6 +274,18 @@ export default function NavHeader() {
                 <MenuItem onClick={handleLogout}>
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
+                <Divider />
+                <Typography
+                  sx={{
+                    alignItems: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    p: "0.2rem",
+                  }}
+                >
+                  <LocalAtmIcon />
+                  {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
+                </Typography>
               </Menu>
             </Box>
           )}

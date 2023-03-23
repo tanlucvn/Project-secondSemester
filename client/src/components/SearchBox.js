@@ -64,7 +64,7 @@ export default function SearchBox() {
     <Form className="d-flex me-auto" onSubmit={submitHandler}>
       <Search>
         <SearchIconWrapper>
-          <IconButton color="primary" type="submit">
+          <IconButton type="submit">
             <SearchOutlined />
           </IconButton>
         </SearchIconWrapper>

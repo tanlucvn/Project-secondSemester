@@ -45,7 +45,7 @@ const ProductScreen = () => {
   return (
     <>
       {products ? (
-        <Container maxWidth={"xl"} component={"main"} sx={{ mt: "120px" }}>
+        <Container maxWidth={"xl"} component={"main"}>
           <Box
             display={"flex"}
             flexDirection={{ xs: "column", md: "row" }}

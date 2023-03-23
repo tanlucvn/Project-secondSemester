@@ -11,7 +11,7 @@ const NotificationBar = () => {
   return (
     <Box
       sx={{
-        mt: "80px",
+        mt: "-37px",
         backgroundColor: "#F9FAFF",
         textAlign: "center",
         padding: 1,

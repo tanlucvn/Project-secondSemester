@@ -131,7 +131,7 @@ export default function OrderHistoryScreen() {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <TableContainer component={Paper} sx={{ mt: "50px" }}>
+        <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>

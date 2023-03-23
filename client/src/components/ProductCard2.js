@@ -108,28 +108,22 @@ const ProductCard = ({
             {name}
           </Typography>
           <Stack direction="row" spacing={1}>
-            <Typography variant="body2">{description}</Typography>
+            <Typography variant="body2">Brand: {brand}</Typography>
           </Stack>
-          <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-            <Chip
-              sx={{
-                backgroundColor: "white",
-                color: "black",
-                border: "2px solid black",
-                borderRadius: "8px",
-              }}
-              label={price}
-              icon={<LocalAtmOutlined color="black" />}
-            />
-            <Chip
-              sx={{
-                backgroundColor: "white",
-                color: "black",
-                border: "2px solid black",
-                borderRadius: "8px",
-              }}
-              label={category}
-            />
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ mt: 2 }}
+            alignItems="center"
+            justifyContent="space-evenly"
+          >
+            <Typography variant="body2" sx={{ textDecoration: "line-through" }}>
+              ${price}
+            </Typography>
+            <Typography variant="h6">${price * (1 - 0.1)}</Typography>
+            <Typography variant="body2" sx={{ color: "#0A8200" }}>
+              ({price * 0.1}% off)
+            </Typography>
           </Stack>
         </CardContent>
         <Divider />

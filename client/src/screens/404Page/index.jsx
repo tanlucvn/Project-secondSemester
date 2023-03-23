@@ -15,7 +15,7 @@ const NoMatch = () => {
   const navigate = useNavigate();
 
   return (
-    <Box height={"100%"} mt={"120px"}>
+    <Box height={"100%"}>
       <Container
         maxWidth={"xl"}
         sx={{
