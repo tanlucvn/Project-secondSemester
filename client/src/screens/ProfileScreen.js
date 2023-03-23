@@ -34,7 +34,6 @@ export default function ProfileScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
   const [name, setName] = useState(userInfo.name);
-  const [email, setEmail] = useState(userInfo.email);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -54,7 +53,6 @@ export default function ProfileScreen() {
         `/api/users/profile/${userInfo.userInfo._id}`,
         {
           name,
-          email,
           password,
         },
         {
@@ -92,28 +90,14 @@ export default function ProfileScreen() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box
-          component="Form"
-          onSubmit={submitHandler}
-          noValidate
-          sx={{ mt: 1 }}
-        >
-          <TextField
-            margin="normal"
-            type="email"
-            label="Email Address"
-            fullWidth
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+        <form onSubmit={submitHandler} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             type="name"
             label="Name"
             fullWidth
             required
-            value={name}
+            value={name ? name : ""}
             onChange={(e) => setName(e.target.value)}
           />
           <TextField
@@ -153,7 +137,7 @@ export default function ProfileScreen() {
               </Link>
             </Grid>
           </Grid>
-        </Box>
+        </form>
       </Box>
     </Container>
   );

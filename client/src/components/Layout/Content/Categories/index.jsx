@@ -53,6 +53,7 @@ const Categories = () => {
         mt: 4,
         mb: 4,
       }}
+      id="categories"
     >
       <CssBaseline />
       <Container maxWidth="xl">

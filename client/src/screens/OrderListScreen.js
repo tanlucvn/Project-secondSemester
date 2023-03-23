@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useContext, useEffect, useReducer } from "react";
-import Button from "react-bootstrap/Button";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import LoadingBox from "../components/LoadingBox";
@@ -8,6 +7,24 @@ import MessageBox from "../components/MessageBox";
 import { Store } from "../Store";
 import { getError } from "../utils";
 import { toast } from "react-toastify";
+import {
+  Box,
+  Chip,
+  Pagination,
+  PaginationItem,
+  Stack,
+  Typography,
+  Button,
+} from "@mui/material";
+import Breadcrumbs from "../components/Breadcrumbs";
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -37,6 +54,27 @@ const reducer = (state, action) => {
       return state;
   }
 };
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "black",
+    color: "white",
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: "#e6e6e6",
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
+
 export default function OrderListScreen() {
   const navigate = useNavigate();
   const { state } = useContext(Store);
@@ -52,7 +90,7 @@ export default function OrderListScreen() {
       try {
         dispatch({ type: "FETCH_REQUEST" });
         const { data } = await axios.get(`/api/orders`, {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
+          headers: { Authorization: `Bearer ${userInfo.userInfo.token}` },
         });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
@@ -86,67 +124,86 @@ export default function OrderListScreen() {
       }
     }
   };
-
+  console.log(orders);
   return (
     <div>
       <Helmet>
         <title>Orders</title>
       </Helmet>
-      <h1>Orders</h1>
+
+      <Breadcrumbs
+        current="Admin"
+        links={[{ title: "Orders", link: "/admin/orders" }]}
+      />
+
       {loadingDelete && <LoadingBox></LoadingBox>}
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>USER</th>
-              <th>DATE</th>
-              <th>TOTAL</th>
-              <th>PAID</th>
-              <th>DELIVERED</th>
-              <th>ACTIONS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id}</td>
-                <td>{order.user ? order.user.name : "DELETED USER"}</td>
-                <td>{order.createdAt.substring(0, 10)}</td>
-                <td>{order.totalPrice.toFixed(2)}</td>
-                <td>{order.isPaid ? order.paidAt.substring(0, 10) : "No"}</td>
-                <td>
-                  {order.isDelivered
-                    ? order.deliveredAt.substring(0, 10)
-                    : "No"}
-                </td>
-                <td>
-                  <Button
-                    type="button"
-                    variant="light"
-                    onClick={() => {
-                      navigate(`/order/${order._id}`);
-                    }}
-                  >
-                    Details
-                  </Button>
-                  &nbsp;
-                  <Button
-                    type="button"
-                    variant="light"
-                    onClick={() => deleteHandler(order)}
-                  >
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>ID</StyledTableCell>
+                <StyledTableCell align="center">User</StyledTableCell>
+                <StyledTableCell align="center">Date</StyledTableCell>
+                <StyledTableCell align="center">Total</StyledTableCell>
+                <StyledTableCell align="center">Paid</StyledTableCell>
+                <StyledTableCell align="center">Delivered</StyledTableCell>
+                <StyledTableCell align="center">Actions</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orders.map((order) => (
+                <StyledTableRow key={order._id}>
+                  <StyledTableCell component="th" scope="order">
+                    {order._id}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {order.user
+                      ? order.shippingAddress.fullName
+                      : "DELETED USER"}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {order.createdAt.substring(0, 10)}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {order.totalPrice.toFixed(2)}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {order.isPaid ? order.paidAt.substring(0, 10) : "No"}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {order.isDelivered
+                      ? order.deliveredAt.substring(0, 10)
+                      : "No"}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Button
+                      type="button"
+                      size="small"
+                      onClick={() => deleteHandler(order)}
+                      sx={{
+                        backgroundColor: "black",
+                        color: "white",
+                        border: "2px solid black",
+                        "&:hover": {
+                          backgroundColor: "none",
+                          color: "black",
+                          border: "none",
+                        },
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
     </div>
   );

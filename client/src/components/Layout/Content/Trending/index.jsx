@@ -169,6 +169,7 @@ const TrendingNow = () => {
             mt: 4,
             mb: 4,
           }}
+          id="trending"
         >
           <CssBaseline />
           <Container maxWidth="xl">

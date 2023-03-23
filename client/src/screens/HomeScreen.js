@@ -11,6 +11,9 @@ import Categories from "../components/Layout/Content/Categories";
 
 //import data from '../data';
 import { Helmet } from "react-helmet-async";
+import ProductHowItWorks from "../components/Layout/Content/HowItWork";
+import Offer from "../components/Layout/Content/Offer";
+import AppFooter from "../components/Layout/Footer";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -53,6 +56,9 @@ function HomeScreen({ theme }) {
       <DealsOfDay theme={theme} />
       <EventProduct theme={theme} />
       <Categories theme={theme} />
+      <ProductHowItWorks />
+      <Offer />
+      <AppFooter />
     </>
   );
 }

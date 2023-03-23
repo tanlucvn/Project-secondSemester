@@ -74,14 +74,12 @@ export default function AddressForm() {
             <Grid item xs={12}>
               <TextField
                 required
-                id="fullName"
-                name="firstName"
-                label="First name"
                 fullWidth
                 autoComplete="given-name"
                 variant="standard"
-                value={fullName}
+                value={userInfo.userInfo.name}
                 onChange={(e) => setFullName(e.target.value)}
+                disabled={true}
               />
             </Grid>
             <Grid item xs={12}>

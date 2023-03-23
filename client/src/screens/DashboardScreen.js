@@ -1,12 +1,8 @@
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import Chart from "react-google-charts";
 import axios from "axios";
 import { Store } from "../Store";
 import { getError } from "../utils";
-import LoadingBox from "../components/LoadingBox";
-import MessageBox from "../components/MessageBox";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import {
   Box,
   Container,
@@ -57,110 +53,122 @@ export default function DashboardScreen() {
     };
     fetchData();
   }, [userInfo]);
-
   return (
     <>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6} md={4}>
-          <Card>
-            <CardContent>
-              <Typography variant="h5" component="h2" gutterBottom>
-                {summary.users && summary.users[0]
-                  ? summary.users[0].numUsers
-                  : 0}
-              </Typography>
-              <Typography color="text.secondary" gutterBottom>
-                Users
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <Card>
-            <CardContent>
-              <Typography variant="h5" component="h2" gutterBottom>
-                {summary.orders && summary.orders[0]
-                  ? summary.orders[0].numOrders
-                  : 0}
-              </Typography>
-              <Typography color="text.secondary" gutterBottom>
-                Orders
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <Card>
-            <CardContent>
-              <Typography variant="h5" component="h2" gutterBottom>
-                {summary.orders && summary.orders[0]
-                  ? summary.orders[0].numOrders
-                  : 0}
-              </Typography>
-              <Typography color="text.secondary" gutterBottom>
-                Orders
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-      <Box sx={{ flexGrow: 1, padding: 3 }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <Paper sx={{ padding: 3 }}>
-              <Typography variant="h5" gutterBottom>
-                Sales
-              </Typography>
-              {summary.dailyOrders.length === 0 ? (
-                <Typography>No Sale</Typography>
-              ) : (
-                <Chart
-                  chartType="AreaChart"
-                  data={[
-                    ["Date", "Sales"],
-                    ...summary.dailyOrders.map((x) => [x._id, x.sales]),
-                  ]}
-                  options={{
-                    legend: { position: "none" },
-                    hAxis: { title: "Date", titleTextStyle: { color: "#333" } },
-                    vAxis: {
-                      title: "Sales",
-                      titleTextStyle: { color: "#333" },
-                    },
-                  }}
-                  width="100%"
-                  height="300px"
-                />
-              )}
-            </Paper>
+      {summary ? (
+        <>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h5" component="h2" gutterBottom>
+                    {summary.users && summary.users[0]
+                      ? summary.users[0].numUsers
+                      : 0}
+                  </Typography>
+                  <Typography color="text.secondary" gutterBottom>
+                    Users
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h5" component="h2" gutterBottom>
+                    {summary.orders && summary.orders[0]
+                      ? summary.orders[0].numOrders
+                      : 0}
+                  </Typography>
+                  <Typography color="text.secondary" gutterBottom>
+                    Orders
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h5" component="h2" gutterBottom>
+                    $
+                    {summary.orders && summary.users[0]
+                      ? summary.orders[0].totalSales.toFixed(2)
+                      : 0}
+                  </Typography>
+                  <Typography color="text.secondary" gutterBottom>
+                    Total
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Paper sx={{ padding: 3 }}>
-              <Typography variant="h5" gutterBottom>
-                Categories
-              </Typography>
-              {summary.productCategories.length === 0 ? (
-                <Typography>No Category</Typography>
-              ) : (
-                <Chart
-                  chartType="PieChart"
-                  data={[
-                    ["Category", "Products"],
-                    ...summary.productCategories.map((x) => [x._id, x.count]),
-                  ]}
-                  options={{
-                    legend: { position: "right" },
-                    pieSliceText: "label",
-                    pieHole: 0.4,
-                  }}
-                  width="100%"
-                  height="300px"
-                />
-              )}
-            </Paper>
-          </Grid>
-        </Grid>
-      </Box>
+          <Box sx={{ flexGrow: 1, padding: 3 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}>
+                <Paper sx={{ padding: 3 }}>
+                  <Typography variant="h5" gutterBottom>
+                    Sales
+                  </Typography>
+                  {summary.dailyOrders.length === 0 ? (
+                    <Typography>No Sale</Typography>
+                  ) : (
+                    <Chart
+                      chartType="AreaChart"
+                      data={[
+                        ["Date", "Sales"],
+                        ...summary.dailyOrders.map((x) => [x._id, x.sales]),
+                      ]}
+                      options={{
+                        legend: { position: "none" },
+                        hAxis: {
+                          title: "Date",
+                          titleTextStyle: { color: "#333" },
+                        },
+                        vAxis: {
+                          title: "Sales",
+                          titleTextStyle: { color: "#333" },
+                        },
+                      }}
+                      width="100%"
+                      height="300px"
+                    />
+                  )}
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Paper sx={{ padding: 3 }}>
+                  <Typography variant="h5" gutterBottom>
+                    Categories
+                  </Typography>
+                  {summary.productCategories.length === 0 ? (
+                    <Typography>No Category</Typography>
+                  ) : (
+                    <Chart
+                      chartType="PieChart"
+                      data={[
+                        ["Category", "Products"],
+                        ...summary.productCategories.map((x) => [
+                          x._id,
+                          x.count,
+                        ]),
+                      ]}
+                      options={{
+                        legend: { position: "right" },
+                        pieSliceText: "label",
+                        pieHole: 0.4,
+                      }}
+                      width="100%"
+                      height="300px"
+                    />
+                  )}
+                </Paper>
+              </Grid>
+            </Grid>
+          </Box>
+        </>
+      ) : (
+        <Box>Error</Box>
+      )}
     </>
   );
 }

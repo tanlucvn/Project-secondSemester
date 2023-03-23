@@ -6,11 +6,10 @@ productRouter.get("/", async (req, res) => {
   const products = await Product.find();
   res.send(products);
 });
-import { isAuth, isAdmin } from '../utils.js';
-
+import { isAuth, isAdmin } from "../utils.js";
 
 productRouter.put(
-  '/:id',
+  "/:id",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
@@ -26,54 +25,54 @@ productRouter.put(
       product.countInStock = req.body.countInStock;
       product.description = req.body.description;
       await product.save();
-      res.send({ message: 'Product Updated' });
+      res.send({ message: "Product Updated" });
     } else {
-      res.status(404).send({ message: 'Product Not Found' });
+      res.status(404).send({ message: "Product Not Found" });
     }
   })
 );
 
 productRouter.delete(
-  '/:id',
+  "/:id",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (product) {
       await product.remove();
-      res.send({ message: 'Product Deleted' });
+      res.send({ message: "Product Deleted" });
     } else {
-      res.status(404).send({ message: 'Product Not Found' });
+      res.status(404).send({ message: "Product Not Found" });
     }
   })
 );
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 5;
 
 productRouter.post(
-  '/',
+  "/",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
     const newProduct = new Product({
-      name: 'sample name ' + Date.now(),
-      slug: 'sample-name-' + Date.now(),
-      image: '/images/p1.jpg',
+      name: "sample name " + Date.now(),
+      slug: "sample-name-" + Date.now(),
+      image: "/images/p1.jpg",
       price: 0,
-      category: 'sample category',
-      brand: 'sample brand',
+      category: "sample category",
+      brand: "sample brand",
       countInStock: 0,
       rating: 0,
       numReviews: 0,
-      description: 'sample description',
+      description: "sample description",
     });
     const product = await newProduct.save();
-    res.send({ message: 'Product Created', product });
+    res.send({ message: "Product Created", product });
   })
 );
 
 productRouter.get(
-  '/admin',
+  "/admin",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
