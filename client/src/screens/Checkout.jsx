@@ -49,7 +49,7 @@ function Copyright() {
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
-function getStepContent(step) {
+function getStepContent() {
   switch (window.location.pathname.split("/")[1]) {
     case "shipping":
       return <AddressForm />;
@@ -63,17 +63,6 @@ function getStepContent(step) {
 }
 
 export default function Checkout() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const navigate = useNavigate();
-
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
-
   return (
     <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
       <Paper
@@ -83,60 +72,7 @@ export default function Checkout() {
         <Typography component="h1" variant="h4" align="center">
           Checkout
         </Typography>
-
-        {activeStep === steps.length ? (
-          <React.Fragment>
-            <Typography variant="h5" gutterBottom>
-              Thank you for your order.
-            </Typography>
-            <Typography variant="subtitle1">
-              Your order number is #2001539. We have emailed your order
-              confirmation, and will send you an update when your order has
-              shipped.
-            </Typography>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            {getStepContent(activeStep)}
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              {activeStep !== 0 && (
-                <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                  Back
-                </Button>
-              )}
-              {activeStep === steps.length - 3 && (
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    handleNext();
-                    navigate("/payment");
-                  }}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  Next
-                </Button>
-              )}
-              {activeStep === steps.length - 2 && (
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  Next
-                </Button>
-              )}
-              {activeStep === steps.length - 1 && (
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  Submit
-                </Button>
-              )}
-            </Box>
-          </React.Fragment>
-        )}
+        <React.Fragment>{getStepContent()}</React.Fragment>
       </Paper>
       <Copyright />
     </Container>

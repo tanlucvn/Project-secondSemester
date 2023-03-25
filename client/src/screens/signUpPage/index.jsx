@@ -67,7 +67,7 @@ export default function SignupScreen() {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+        <Avatar sx={{ m: 1, bgcolor: "black" }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -107,9 +107,30 @@ export default function SignupScreen() {
           onChange={(e) => setConfirmpassword(e.target.value)}
         />
 
-        <Button type="submit">Sign Up</Button>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{
+            mt: 3,
+            mb: 2,
+            backgroundColor: "black",
+            border: "2px solid black",
+            "&:hover": {
+              backgroundColor: "white",
+              border: "2px solid black",
+              color: "black",
+            },
+          }}
+        >
+          Sign Up
+        </Button>
 
-        <Link to="/signin" variant="body2">
+        <Link
+          to="/signin"
+          variant="body2"
+          style={{ textDecoration: "none", color: "#565656" }}
+        >
           {"Already have a account? Sign In"}
         </Link>
       </Box>

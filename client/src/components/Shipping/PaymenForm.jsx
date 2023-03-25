@@ -30,8 +30,9 @@ import {
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Store } from "../../Store";
+import "./style.css";
 
-const steps = ["Step 1", "Create an ad group", "Create an ad"];
+const steps = ["Address", "Payment", "Confirm"];
 
 export default function PaymentForm() {
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -80,7 +81,7 @@ export default function PaymentForm() {
           </FormControl>
           <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
             <Button type="submit" variant="contained" sx={{ mt: 3, ml: 1 }}>
-              DDDDD
+              Next
             </Button>
           </Box>
         </React.Fragment>

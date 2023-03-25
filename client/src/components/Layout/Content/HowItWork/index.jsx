@@ -1,6 +1,18 @@
 import * as React from "react";
 
-import { Box, Grid, Typography, Container, Button } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  Container,
+  Button,
+  Avatar,
+} from "@mui/material";
+import {
+  HowToRegOutlined,
+  DeliveryDiningOutlined,
+  FeedbackOutlined,
+} from "@mui/icons-material";
 
 const item = {
   display: "flex",
@@ -12,7 +24,7 @@ const item = {
 const number = {
   fontSize: 24,
   fontFamily: "default",
-  color: "secondary.main",
+  color: "black !important",
   fontWeight: "medium",
 };
 
@@ -24,93 +36,119 @@ const image = {
 function ProductHowItWorks() {
   return (
     <Box
-      component="section"
       sx={{
         display: "flex",
-        bgcolor: "black",
         overflow: "hidden",
-        color: "white",
+        color: "black",
+        backgroundColor: "#fffff",
       }}
     >
       <Container
         sx={{
-          mt: 10,
-          mb: 15,
+          mt: 7,
+          mb: 7,
           position: "relative",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <Box
-          component="img"
-          src="/static/themes/onepirate/productCurvyLines.png"
-          alt="curvy lines"
-          sx={{
-            pointerEvents: "none",
-            position: "absolute",
-            top: -180,
-            opacity: 0.7,
-          }}
-        />
-        <Typography variant="h4" marked="center" component="h2" sx={{ mb: 14 }}>
-          How it works
+        <Typography variant="h4" marked="center" component="h2" sx={{ mb: 7 }}>
+          HOW IT WORKS
         </Typography>
         <div>
           <Grid container spacing={5}>
             <Grid item xs={12} md={4}>
               <Box sx={item}>
                 <Box sx={number}>1.</Box>
-                <Box
-                  component="img"
-                  src="/static/themes/onepirate/productHowItWorks1.svg"
-                  alt="suitcase"
-                  sx={image}
-                />
-                <Typography variant="h5" align="center">
-                  Appointment every Wednesday 9am.
+                <Avatar
+                  sx={{
+                    width: 100,
+                    height: 100,
+                    mt: 2,
+                    mb: 2,
+                    backgroundColor: "black",
+                  }}
+                >
+                  <HowToRegOutlined fontSize="large" />
+                </Avatar>
+                <Typography variant="h5" align="center" mb={1}>
+                  Register
+                </Typography>
+                <Typography variant="subtitle1" align="center">
+                  Click the "Shop Now" button to register an account now to
+                  become a member and receive many offers from Men's.
+                </Typography>
+                <Typography variant="caption" align="center">
+                  Read more...
                 </Typography>
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
               <Box sx={item}>
                 <Box sx={number}>2.</Box>
-                <Box
-                  component="img"
-                  src="/static/themes/onepirate/productHowItWorks2.svg"
-                  alt="graph"
-                  sx={image}
-                />
-                <Typography variant="h5" align="center">
-                  First come, first served. Our offers are in limited
-                  quantities, so be quick.
+                <Avatar
+                  sx={{
+                    width: 100,
+                    height: 100,
+                    mt: 2,
+                    mb: 2,
+                    backgroundColor: "black",
+                  }}
+                >
+                  <DeliveryDiningOutlined fontSize="large" />
+                </Avatar>
+                <Typography variant="h5" align="center" mb={1}>
+                  Delivery
+                </Typography>
+                <Typography variant="subtitle1" align="center">
+                  Fast delivery, shipping to all areas in cooperation with many
+                  delivery units.
+                </Typography>
+                <Typography variant="caption" align="center">
+                  Read more...
                 </Typography>
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
               <Box sx={item}>
                 <Box sx={number}>3.</Box>
-                <Box
-                  component="img"
-                  src="/static/themes/onepirate/productHowItWorks3.svg"
-                  alt="clock"
-                  sx={image}
-                />
-                <Typography variant="h5" align="center">
-                  {"New offers every week. New experiences, new surprises. "}
-                  {"Your Sundays will no longer be alike."}
+                <Avatar
+                  sx={{
+                    width: 100,
+                    height: 100,
+                    mt: 2,
+                    mb: 2,
+                    backgroundColor: "black",
+                  }}
+                >
+                  <FeedbackOutlined fontSize="large" />
+                </Avatar>
+                <Typography variant="h5" align="center" mb={1}>
+                  Feedback
+                </Typography>
+                <Typography variant="subtitle1" align="center">
+                  Dedicated customer care team always answer questions.
+                </Typography>
+                <Typography variant="caption" align="center">
+                  Read more...
                 </Typography>
               </Box>
             </Grid>
           </Grid>
         </div>
         <Button
-          color="secondary"
           size="large"
           variant="contained"
           component="a"
-          href="/premium-themes/onepirate/sign-up/"
-          sx={{ mt: 8 }}
+          href="#!"
+          sx={{
+            mt: 8,
+            color: "black",
+            backgroundColor: "white",
+            border: "2px solid black",
+            "&:hover": { color: "white", backgroundColor: "black" },
+          }}
         >
           Get started
         </Button>

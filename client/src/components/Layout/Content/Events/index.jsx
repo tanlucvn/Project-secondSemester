@@ -22,7 +22,7 @@ const CarouselItem = () => {
             }}
             component="img"
             alt="PRADA"
-            src="/images/event-prada.jpg"
+            src="/images/event-gucci.jpg"
           />
         </Grid>
         <Grid
@@ -42,12 +42,11 @@ const CarouselItem = () => {
             alignItems="center"
             sx={{ m: { xs: 4, sm: 0 } }}
           >
-            <Box
-              sx={{ mb: { xs: 1, md: 4 }, width: "80%" }}
-              component="img"
-              alt="PRADA"
-              src="/images/prada.svg"
-            />
+            <Box sx={{ mb: { xs: 1, md: 4 }, width: "80%" }}>
+              <Typography variant="h1" fontWeight="bold">
+                LUDU
+              </Typography>
+            </Box>
             <Typography variant="h4" color={"#565656"}>
               Big Fashion Festival
             </Typography>
@@ -56,7 +55,268 @@ const CarouselItem = () => {
             </Typography>
             <Button
               variant="outlined"
-              sx={{ textTransform: "none", pl: 6, pr: 6 }}
+              sx={{
+                textTransform: "none",
+                pl: 6,
+                pr: 6,
+                color: "#ff4d4d",
+                border: "2px solid #ff4d4d",
+                "&:hover": {
+                  border: "2px solid #ff4d4d",
+                },
+              }}
+            >
+              Explore
+            </Button>
+          </Stack>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+};
+const CarouselItem2 = () => {
+  return (
+    <Box>
+      <Grid container>
+        <Grid item xs={12} sm={6} md={6.43}>
+          <Box
+            sx={{
+              width: "100%",
+            }}
+            component="img"
+            alt="PRADA"
+            src="/images/event-gucci-2.jpg"
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={5.57}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundImage: "url(/images/event-prada-background.png)",
+          }}
+        >
+          <Stack
+            spacing={{ xs: 1, md: 2 }}
+            alignItems="center"
+            sx={{ m: { xs: 4, sm: 0 } }}
+          >
+            <Box sx={{ mb: { xs: 1, md: 4 }, width: "80%" }}>
+              <Typography variant="h1" fontWeight="bold">
+                LUDU
+              </Typography>
+            </Box>
+            <Typography variant="h4" color={"#565656"}>
+              Big Fashion Festival
+            </Typography>
+            <Typography variant="h4" color={"#565656"}>
+              50% - 80% off
+            </Typography>
+            <Button
+              variant="outlined"
+              sx={{
+                textTransform: "none",
+                pl: 6,
+                pr: 6,
+                color: "#ff4d4d",
+                border: "2px solid #ff4d4d",
+                "&:hover": {
+                  border: "2px solid #ff4d4d",
+                },
+              }}
+            >
+              Explore
+            </Button>
+          </Stack>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+};
+const CarouselItem3 = () => {
+  return (
+    <Box>
+      <Grid container>
+        <Grid item xs={12} sm={6} md={6.43}>
+          <Box
+            sx={{
+              width: "100%",
+            }}
+            component="img"
+            alt="PRADA"
+            src="/images/event-gucci-3.jpg"
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={5.57}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundImage: "url(/images/event-prada-background.png)",
+          }}
+        >
+          <Stack
+            spacing={{ xs: 1, md: 2 }}
+            alignItems="center"
+            sx={{ m: { xs: 4, sm: 0 } }}
+          >
+            <Box sx={{ mb: { xs: 1, md: 4 }, width: "80%" }}>
+              <Typography variant="h1" fontWeight="bold">
+                LUDU
+              </Typography>
+            </Box>
+            <Typography variant="h4" color={"#565656"}>
+              Big Fashion Festival
+            </Typography>
+            <Typography variant="h4" color={"#565656"}>
+              50% - 80% off
+            </Typography>
+            <Button
+              variant="outlined"
+              sx={{
+                textTransform: "none",
+                pl: 6,
+                pr: 6,
+                color: "#ff4d4d",
+                border: "2px solid #ff4d4d",
+                "&:hover": {
+                  border: "2px solid #ff4d4d",
+                },
+              }}
+            >
+              Explore
+            </Button>
+          </Stack>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+};
+const CarouselItem4 = () => {
+  return (
+    <Box>
+      <Grid container>
+        <Grid item xs={12} sm={6} md={6.43}>
+          <Box
+            sx={{
+              width: "100%",
+            }}
+            component="img"
+            alt="PRADA"
+            src="/images/event-gucci-4.jpg"
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={5.57}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundImage: "url(/images/event-prada-background.png)",
+          }}
+        >
+          <Stack
+            spacing={{ xs: 1, md: 2 }}
+            alignItems="center"
+            sx={{ m: { xs: 4, sm: 0 } }}
+          >
+            <Box sx={{ mb: { xs: 1, md: 4 }, width: "80%" }}>
+              <Typography variant="h1" fontWeight="bold">
+                LUDU
+              </Typography>
+            </Box>
+            <Typography variant="h4" color={"#565656"}>
+              Big Fashion Festival
+            </Typography>
+            <Typography variant="h4" color={"#565656"}>
+              50% - 80% off
+            </Typography>
+            <Button
+              variant="outlined"
+              sx={{
+                textTransform: "none",
+                pl: 6,
+                pr: 6,
+                color: "#ff4d4d",
+                border: "2px solid #ff4d4d",
+                "&:hover": {
+                  border: "2px solid #ff4d4d",
+                },
+              }}
+            >
+              Explore
+            </Button>
+          </Stack>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+};
+const CarouselItem5 = () => {
+  return (
+    <Box>
+      <Grid container>
+        <Grid item xs={12} sm={6} md={6.43}>
+          <Box
+            sx={{
+              width: "100%",
+            }}
+            component="img"
+            alt="PRADA"
+            src="/images/event-gucci-5.jpg"
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={5.57}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundImage: "url(/images/event-prada-background.png)",
+          }}
+        >
+          <Stack
+            spacing={{ xs: 1, md: 2 }}
+            alignItems="center"
+            sx={{ m: { xs: 4, sm: 0 } }}
+          >
+            <Box sx={{ mb: { xs: 1, md: 4 }, width: "80%" }}>
+              <Typography variant="h1" fontWeight="bold">
+                LUDU
+              </Typography>
+            </Box>
+            <Typography variant="h4" color={"#565656"}>
+              Big Fashion Festival
+            </Typography>
+            <Typography variant="h4" color={"#565656"}>
+              50% - 80% off
+            </Typography>
+            <Button
+              variant="outlined"
+              sx={{
+                textTransform: "none",
+                pl: 6,
+                pr: 6,
+                color: "#ff4d4d",
+                border: "2px solid #ff4d4d",
+                "&:hover": {
+                  border: "2px solid #ff4d4d",
+                },
+              }}
             >
               Explore
             </Button>
@@ -87,10 +347,10 @@ const EventCarousel = () => {
       <Container maxWidth="xl" disableGutters>
         <Slider {...setting}>
           <CarouselItem />
-          <CarouselItem />
-          <CarouselItem />
-          <CarouselItem />
-          <CarouselItem />
+          <CarouselItem2 />
+          <CarouselItem3 />
+          <CarouselItem4 />
+          <CarouselItem5 />
         </Slider>
       </Container>
     </Box>

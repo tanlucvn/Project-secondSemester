@@ -1,124 +1,218 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
-import Container from "@mui/material/Container";
-import { Typography, TextField, Paper } from "@mui/material";
-import { FacebookOutlined } from "@mui/icons-material";
-
-function Copyright() {
-  return (
-    <React.Fragment>
-      {"© "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-    </React.Fragment>
-  );
-}
-
-const iconStyle = {
-  width: 48,
-  height: 48,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  backgroundColor: "warning.main",
-  mr: 1,
-  "&:hover": {
-    bgcolor: "warning.dark",
-  },
-};
+import React from "react";
+import {
+  Paper,
+  Typography,
+  Container,
+  Grid,
+  Box,
+  Link,
+  TextField,
+  useMediaQuery,
+} from "@mui/material";
+import { FacebookOutlined, Twitter } from "@mui/icons-material";
 
 const LANGUAGES = [
-  {
-    code: "en-US",
-    name: "English",
-  },
-  {
-    code: "vn-VN",
-    name: "Vietnamese",
-  },
+  { code: "en", name: "English" },
+  { code: "vn", name: "Vietnamese" },
 ];
 
-export default function AppFooter() {
+const Footer = () => {
+  const isNonMobileScreens = useMediaQuery("(min-width: 600px)");
   return (
-    <Paper elevation={3} sx={{ mt: "3rem" }}>
-      <Typography
-        component="footer"
-        variant="overline"
-        sx={{ display: "flex", bgcolor: "white" }}
-      >
-        <Container sx={{ my: 3, display: "flex" }}>
-          <Grid container spacing={5}>
-            <Grid item xs={6} sm={4} md={3}>
-              <Grid
-                container
-                direction="column"
-                justifyContent="flex-end"
-                spacing={2}
-                sx={{ height: 120 }}
-              >
-                <Grid item sx={{ display: "flex" }}>
-                  <Box component="a" href="https://mui.com/" sx={iconStyle}>
-                    <FacebookOutlined />
-                  </Box>
-                  <Box
-                    component="a"
-                    href="https://twitter.com/MUI_hq"
-                    sx={iconStyle}
-                  >
-                    <img
-                      src="/static/themes/onepirate/appFooterTwitter.png"
-                      alt="Twitter"
-                    />
+    <>
+      {isNonMobileScreens ? (
+        <Paper elevation={3} sx={{ mt: "3rem" }}>
+          <Typography
+            component="footer"
+            variant="overline"
+            sx={{
+              display: "flex",
+              bgcolor: "white",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              px: { xs: 2, sm: 3 },
+              py: { xs: 3, sm: 4 },
+              alignItems: { xs: "center", sm: "flex-start" },
+            }}
+          >
+            <Container maxWidth="lg">
+              <Grid container spacing={2} alignItems="center">
+                <Grid item xs={6} sm={4}>
+                  <Typography variant="h6">SOCIAL</Typography>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box
+                      component="a"
+                      href="#!"
+                      sx={{
+                        mr: 1,
+                        color: "black",
+                        textDecoration: "none",
+                        fontSize: "0.7rem",
+                        textAlign: "center",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography variant="srOnly">Facebook</Typography>
+                      <FacebookOutlined />
+                    </Box>
+                    <Box
+                      component="a"
+                      href="#!"
+                      sx={{
+                        mr: 1,
+                        color: "black",
+                        textDecoration: "none",
+                        fontSize: "0.7rem",
+                        textAlign: "center",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography variant="srOnly">Twitter</Typography>
+                      <Twitter />
+                    </Box>
                   </Box>
                 </Grid>
-                <Grid item>
-                  <Copyright />
+                <Grid item xs={6} sm={4}>
+                  <Typography variant="h6">Legal</Typography>
+                  <Box component="ul" sx={{ m: 0, listStyle: "none", p: 0 }}>
+                    <Box
+                      component="a"
+                      href="#!"
+                      sx={{
+                        mr: 1,
+                        color: "black",
+                        textDecoration: "none",
+                        fontSize: "0.7rem",
+                        textAlign: "center",
+                      }}
+                    >
+                      <Typography variant="srOnly">Terms</Typography>
+                    </Box>
+                    <Typography variant="srOnly">Privacy</Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <TextField
+                    select
+                    size="medium"
+                    variant="standard"
+                    SelectProps={{
+                      native: true,
+                    }}
+                    sx={{ mb: 1, width: 150 }}
+                  >
+                    {LANGUAGES.map((language) => (
+                      <option
+                        value={language.code}
+                        key={language.code}
+                        style={{ width: "10px" }}
+                      >
+                        {language.name}
+                      </option>
+                    ))}
+                  </TextField>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography
+                    variant="caption"
+                    sx={{ textAlign: { xs: "center", sm: "left" } }}
+                  >
+                    © 2023 Ludustore. All rights reserved.
+                  </Typography>
                 </Grid>
               </Grid>
-            </Grid>
-            <Grid item xs={6} sm={4} md={2}>
-              <Typography variant="h6" marked="left" gutterBottom>
-                Legal
-              </Typography>
-              <Box component="ul" sx={{ m: 0, listStyle: "none", p: 0 }}>
-                <Box component="li" sx={{ py: 0.5 }}>
-                  <Link href="#!">Terms</Link>
-                </Box>
-                <Box component="li" sx={{ py: 0.5 }}>
-                  <Link href="#!">Privacy</Link>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={6} sm={8} md={4}>
-              <Typography variant="h6" marked="left" gutterBottom>
-                Language
-              </Typography>
-              <TextField
-                select
-                size="medium"
-                variant="standard"
-                SelectProps={{
-                  native: true,
-                }}
-                sx={{ mt: 1, width: 150 }}
-              >
-                {LANGUAGES.map((language) => (
-                  <option value={language.code} key={language.code}>
-                    {language.name}
-                  </option>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item>
-              <Typography variant="caption">Copyright @ Ludustore</Typography>
-            </Grid>
-          </Grid>
-        </Container>
-      </Typography>
-    </Paper>
+            </Container>
+          </Typography>
+        </Paper>
+      ) : (
+        <Paper elevation={3} sx={{ mt: "3rem" }}>
+          <Typography
+            component="footer"
+            variant="overline"
+            sx={{
+              display: "flex",
+              bgcolor: "white",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              px: { xs: 2, sm: 3 },
+              py: { xs: 3, sm: 4 },
+              alignItems: { xs: "center", sm: "flex-start" },
+            }}
+          >
+            <Container maxWidth="lg">
+              <Grid container spacing={2} alignItems="center">
+                <Grid item xs={6} sm={4}>
+                  <Typography variant="h6">SOCIAL</Typography>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box
+                      component="a"
+                      href="#!"
+                      sx={{
+                        mr: 1,
+                        color: "black",
+                        textDecoration: "none",
+                        fontSize: "0.7rem",
+                        textAlign: "center",
+                      }}
+                    >
+                      <Typography variant="srOnly">Facebook</Typography>
+                      <FacebookOutlined />
+                    </Box>
+                    <Box
+                      component="a"
+                      href="#!"
+                      sx={{
+                        mr: 1,
+                        color: "black",
+                        textDecoration: "none",
+                        fontSize: "0.7rem",
+                        textAlign: "center",
+                      }}
+                    >
+                      <Typography variant="srOnly">Twitter</Typography>
+                      <Twitter />
+                    </Box>
+                  </Box>
+                </Grid>
+
+                <Grid item xs={6} sm={4}>
+                  <TextField
+                    select
+                    size="medium"
+                    variant="standard"
+                    SelectProps={{
+                      native: true,
+                    }}
+                    sx={{ mb: 1, width: 150 }}
+                  >
+                    {LANGUAGES.map((language) => (
+                      <option
+                        value={language.code}
+                        key={language.code}
+                        style={{ width: "10px" }}
+                      >
+                        {language.name}
+                      </option>
+                    ))}
+                  </TextField>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography
+                    variant="caption"
+                    sx={{ textAlign: { xs: "center", sm: "left" } }}
+                  >
+                    © 2023 Ludustore. All rights reserved.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Container>
+          </Typography>
+        </Paper>
+      )}
+    </>
   );
-}
+};
+
+export default Footer;

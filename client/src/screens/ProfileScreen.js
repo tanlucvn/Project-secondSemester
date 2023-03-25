@@ -14,7 +14,11 @@ import {
   Avatar,
   Typography,
 } from "@mui/material";
-import LockOutlined from "@mui/icons-material/LockOutlined";
+import {
+  AccountCircle,
+  ErrorOutline,
+  CheckCircleOutline,
+} from "@mui/icons-material";
 import { Link } from "react-router-dom";
 const reducer = (state, action) => {
   switch (action.type) {
@@ -44,7 +48,17 @@ export default function ProfileScreen() {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error("passwords do not match");
+      toast.error("Password does not match", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: "dark",
+        icon: <ErrorOutline color="white" />,
+        toastId: "submitHandler",
+      });
       return;
     }
 
@@ -64,7 +78,17 @@ export default function ProfileScreen() {
       });
       ctxDispatch({ type: "USER_SIGNIN", payload: data });
       localStorage.setItem("userInfo", JSON.stringify(data));
-      toast.success("User updated successfully");
+      toast.error("Updated profile successfully", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: "dark",
+        icon: <CheckCircleOutline color="white" />,
+        toastId: "submitHandler",
+      });
     } catch (err) {
       dispatch({
         type: "FETCH_FAIL",
@@ -84,11 +108,11 @@ export default function ProfileScreen() {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlined />
+        <Avatar sx={{ m: 1, bgcolor: "black" }}>
+          <AccountCircle />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Profile
         </Typography>
         <form onSubmit={submitHandler} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -121,22 +145,20 @@ export default function ProfileScreen() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{
+              mt: 3,
+              mb: 2,
+              backgroundColor: "black",
+              border: "2px solid black",
+              "&:hover": {
+                backgroundColor: "white",
+                border: "2px solid black",
+                color: "black",
+              },
+            }}
           >
             Confirm
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link to="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </Box>
     </Container>

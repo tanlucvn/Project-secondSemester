@@ -15,11 +15,14 @@ import {
   AddShoppingCartOutlined,
   LocalActivity,
   CheckroomOutlined,
+  CheckCircleOutline,
 } from "@mui/icons-material";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useContext, useReducer, useEffect } from "react";
 import { Store } from "../Store";
+import { toast } from "react-toastify";
+import ShowMore from "./ShowMore";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -73,10 +76,21 @@ const ProductCard = ({
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const thisProduct = products.filter((prod) => prod._id === items);
     const { data } = await axios.get(`/api/products/${thisProduct[0]._id}`);
-
     if (data.countInStock < quantity) {
       window.alert("Sorry. products is out of stock");
       return;
+    } else {
+      toast.success("Added to cart", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: "dark",
+        icon: <CheckCircleOutline color="white" />,
+        toastId: "addToCartHandler",
+      });
     }
     ctxDispatch({
       type: "CART_ADD_ITEM",
@@ -97,6 +111,14 @@ const ProductCard = ({
           image={image}
           alt="green iguana"
           onClick={() => navigate(`/product/${slug}`)}
+          sx={{
+            "&:hover": {
+              cursor: "pointer",
+              opacity: "0.6",
+              transition: ".5s ease",
+            },
+            objectFit: "contain",
+          }}
         />
         <CardContent>
           <Typography
@@ -108,9 +130,21 @@ const ProductCard = ({
             {name}
           </Typography>
           <Stack direction="row" spacing={1}>
-            <Typography variant="body2">{description}</Typography>
+            <Typography variant="body2">
+              {description.length < 50 ? (
+                <>
+                  <Typography>{description}</Typography>
+                </>
+              ) : (
+                <ShowMore text={description} />
+              )}
+            </Typography>
           </Stack>
-          <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ mt: 2, display: "flex", justifyContent: "space-evenly" }}
+          >
             <Chip
               sx={{
                 backgroundColor: "white",
@@ -129,6 +163,17 @@ const ProductCard = ({
                 borderRadius: "8px",
               }}
               label={category}
+              onClick={() => navigate(`/search/?query=${category}`)}
+            />
+            <Chip
+              sx={{
+                backgroundColor: "white",
+                color: "black",
+                border: "2px solid black",
+                borderRadius: "8px",
+              }}
+              label={brand}
+              onClick={() => navigate(`/search/?query=${brand}`)}
             />
           </Stack>
         </CardContent>

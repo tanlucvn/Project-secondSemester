@@ -1,0 +1,6 @@
+.Mui-active {
+  color: black !important; /* Change the color of the active step label */
+}
+.Mui-completed {
+  color: black !important; /* Change the color of the active step icon */
+}

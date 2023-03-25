@@ -28,7 +28,7 @@ const EventProduct = () => {
           }}
         >
           <Typography variant="h2" sx={{ mb: 6 }}>
-            FOREVER 21
+            FOREVER 23
           </Typography>
           <Typography variant="h4" sx={{ mb: 4 }}>
             Big Fashion Festival
@@ -38,8 +38,16 @@ const EventProduct = () => {
           </Typography>
           <Button
             variant="outlined"
-            color="secondary"
-            sx={{ textTransform: "none", pl: 6, pr: 6 }}
+            sx={{
+              textTransform: "none",
+              pl: 6,
+              pr: 6,
+              color: "white",
+              border: "2px solid white",
+              "&:hover": {
+                border: "2px solid white",
+              },
+            }}
           >
             Explore
           </Button>

@@ -71,7 +71,7 @@ export default function SignInScreen() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: "black" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -104,18 +104,36 @@ export default function SignInScreen() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: "black",
+                border: "2px solid black",
+                "&:hover": {
+                  backgroundColor: "white",
+                  border: "2px solid black",
+                  color: "black",
+                },
+              }}
             >
               Sign In
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link
+                  href="#"
+                  variant="body2"
+                  style={{ textDecoration: "none", color: "#565656" }}
+                >
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link to="/signup" variant="body2">
+                <Link
+                  to="/signup"
+                  variant="body2"
+                  style={{ textDecoration: "none", color: "#565656" }}
+                >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

@@ -25,6 +25,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { CheckCircleOutline } from "@mui/icons-material";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -114,7 +115,17 @@ export default function OrderListScreen() {
         await axios.delete(`/api/orders/${order._id}`, {
           headers: { Authorization: `Bearer ${userInfo.userInfo.token}` },
         });
-        toast.success("order deleted successfully");
+        toast.success("Deleted order successfully", {
+          position: "bottom-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          theme: "dark",
+          icon: <CheckCircleOutline color="white" />,
+          toastId: "deleteHandler",
+        });
         dispatch({ type: "DELETE_SUCCESS" });
       } catch (err) {
         toast.error(getError(error));
@@ -188,7 +199,6 @@ export default function OrderListScreen() {
                       sx={{
                         backgroundColor: "black",
                         color: "white",
-                        border: "2px solid black",
                         "&:hover": {
                           backgroundColor: "none",
                           color: "black",

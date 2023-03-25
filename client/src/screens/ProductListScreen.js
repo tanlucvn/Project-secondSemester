@@ -27,6 +27,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { CheckCircleOutline } from "@mui/icons-material";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -118,9 +119,9 @@ export default function ProductListScreen() {
 
   useEffect(() => {
     if (crrP > 0) {
-      navigate(`/admin/orders?page=${crrP}`);
+      navigate(`/admin/products?page=${crrP}`);
     } else {
-      navigate(`/admin/orders?page=1`);
+      navigate(`/admin/products?page=1`);
     }
   }, [crrP]);
 
@@ -170,7 +171,17 @@ export default function ProductListScreen() {
         await axios.delete(`/api/products/${item._id}`, {
           headers: { Authorization: `Bearer ${userInfo.userInfo.token}` },
         });
-        toast.success("product deleted successfully");
+        toast.success("Delete product successfully", {
+          position: "bottom-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          theme: "dark",
+          icon: <CheckCircleOutline color="white" />,
+          toastId: "deleteHandle",
+        });
         dispatch({ type: "DELETE_SUCCESS" });
       } catch (err) {
         toast.error(getError(error));

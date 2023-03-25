@@ -47,7 +47,7 @@ productRouter.delete(
   })
 );
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 6;
 
 productRouter.post(
   "/",

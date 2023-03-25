@@ -8,8 +8,9 @@ import { Box, Button, Stepper, Step, StepLabel } from "@mui/material";
 import { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Store } from "../../Store";
+import "./style.css";
 
-const steps = ["Step 1", "Create an ad group", "Create an ad"];
+const steps = ["Address", "Payment", "Confirm"];
 export default function AddressForm() {
   const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -30,6 +31,7 @@ export default function AddressForm() {
     if (!userInfo) {
       navigate("/signin?redirect=/shipping");
     }
+    setFullName(userInfo.userInfo.name);
   }, [userInfo, navigate]);
   const submitAddressHandler = (e) => {
     e.preventDefault();
@@ -78,7 +80,6 @@ export default function AddressForm() {
                 autoComplete="given-name"
                 variant="standard"
                 value={userInfo.userInfo.name}
-                onChange={(e) => setFullName(e.target.value)}
                 disabled={true}
               />
             </Grid>
@@ -152,7 +153,7 @@ export default function AddressForm() {
               }}
               sx={{ mt: 3, ml: 1 }}
             >
-              DDDDD
+              Next
             </Button>
           </Box>
         </React.Fragment>

@@ -97,48 +97,6 @@ const DealsOfDay = () => {
     );
   };
 
-  /*   const products = [
-    {
-      title: "Womens Denim Jacket",
-      image: "/images/product2.png",
-      rate: 4.4,
-      price: 1000,
-      discount: 0.3,
-    },
-
-    {
-      title: "Womens Denim Jacket",
-      image: "/images/product3.jpg",
-      rate: 4.4,
-      price: 1000,
-      discount: 0.3,
-    },
-
-    {
-      title: "Womens Denim Jacket",
-      image: "/images/product1.png",
-      rate: 4.4,
-      price: 1000,
-      discount: 0.3,
-    },
-
-    {
-      title: "Womens Denim Jacket",
-      image: "/images/product4.jpg",
-      rate: 4.4,
-      price: 1000,
-      discount: 0.3,
-    },
-
-    {
-      title: "Womens Denim Jacket",
-      image: "/images/product5.jpg",
-      rate: 4.4,
-      price: 1000,
-      discount: 0.3,
-    },
-  ]; */
-
   const setting = {
     dots: false,
     infinite: true,
@@ -229,19 +187,9 @@ const DealsOfDay = () => {
                               alt="green iguana"
                             />
                             <CardContent>
-                              <Box
-                                sx={{
-                                  width: "30%",
-                                  ml: "auto",
-                                  mr: "auto",
-                                  mb: 2,
-                                }}
-                                component="img"
-                                src="/images/levis.svg"
-                              />
                               <Typography
                                 gutterBottom
-                                variant="h5"
+                                variant="h6"
                                 textAlign={"center"}
                                 component="div"
                               >

@@ -19,10 +19,16 @@ import {
   InputBase,
   Badge,
   Divider,
+  useMediaQuery,
 } from "@mui/material";
 import { MenuOutlined } from "@mui/icons-material";
-import { SearchOutlined, ShoppingBagOutlined } from "@mui/icons-material";
+import {
+  SearchOutlined,
+  ShoppingBagOutlined,
+  CheckCircleOutline,
+} from "@mui/icons-material";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
+import { toast } from "react-toastify";
 
 function stringAvatar(name) {
   const nameParts = name.split(" ");
@@ -37,6 +43,7 @@ function stringAvatar(name) {
 }
 
 export default function NavHeader() {
+  const isNonMobileScreens = useMediaQuery("(min-width: 900px)");
   const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
@@ -52,7 +59,7 @@ export default function NavHeader() {
     if (userInfoFromStorage) {
       setUser(userInfoFromStorage);
     }
-  }, []);
+  }, [user, userInfo]);
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -71,6 +78,17 @@ export default function NavHeader() {
     setAnchorElNav(null);
   };
   const handleLogout = () => {
+    toast.success("Logged out", {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      theme: "dark",
+      icon: <CheckCircleOutline color="white" />,
+      toastId: "handleLogout",
+    });
     ctxDispatch({ type: "USER_SIGNOUT" });
     localStorage.removeItem("userInfo");
     localStorage.removeItem("shippingAddress");
@@ -93,244 +111,513 @@ export default function NavHeader() {
           sx={{
             minHeight: { xs: 80 },
             display: "flex",
-            justifyContent: "space-around",
+            justifyContent: isNonMobileScreens
+              ? "space-around"
+              : "space-between",
           }}
         >
-          {/* mobile header 
-          <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuOutlined />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">Contact Us</Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
-          <Typography component="a" href="/">
-            <Box
-              sx={{
-                display: { xs: "flex", md: "none" },
-              }}
-              component="img"
-              alt="logo"
-              src="/logo.png"
-            />
-          </Typography>
-          */}
-
-          {/* menus */}
-          <Box
-            sx={{
-              display: { xs: "none", md: "flex" },
-            }}
-          >
-            <Button
-              onClick={handleCloseNavMenu}
-              sx={{
-                display: "block",
-                pl: 2,
-                pr: 2,
-                textTransform: "none",
-                fontSize: "1.12rem",
-                color: "black",
-              }}
-              component="a"
-              href="#"
-            >
-              Home
-            </Button>
-            <Button
-              onClick={handleCloseNavMenu}
-              sx={{
-                display: "block",
-                pl: 2,
-                pr: 2,
-                ml: 2,
-                textTransform: "none",
-                fontSize: "1.12rem",
-                color: "black",
-              }}
-              component="a"
-              href="#categories"
-            >
-              Categories
-            </Button>
-            <Button
-              onClick={handleCloseNavMenu}
-              sx={{
-                display: "block",
-                pl: 2,
-                pr: 2,
-                ml: 2,
-                textTransform: "none",
-                fontSize: "1.12rem",
-                color: "black",
-              }}
-              component="a"
-              href="#trending"
-            >
-              Trending
-            </Button>
-            <Button
-              onClick={handleCloseNavMenu}
-              sx={{
-                display: "block",
-                pl: 2,
-                pr: 2,
-                ml: 2,
-                textTransform: "none",
-                fontSize: "1.12rem",
-                color: "black",
-              }}
-              component="a"
-              href="#contactUs"
-            >
-              Contact Us
-            </Button>
-          </Box>
-
-          <Typography
-            component="a"
-            href="/"
-            variant="h4"
-            fontWeight="bold"
-            color="black"
-            sx={{ textDecoration: "none" }}
-          >
-            LUDU
-          </Typography>
-
-          <Box
-            sx={{
-              flexGrow: 0,
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <SearchBox />
-            <IconButton aria-label="cart" sx={{ marginRight: "1rem" }}>
-              <Link to="/cart">
-                <Badge
-                  badgeContent={cart.cartItems.reduce(
-                    (a, c) => a + c.quantity,
-                    0
-                  )}
-                  color="error"
-                >
-                  <ShoppingBagOutlined sx={{ color: "black" }} />
-                </Badge>
-              </Link>
-            </IconButton>
-
-            {/* logged in */}
-            {!user ? (
-              <Link to="/signin" style={{ textDecoration: "none" }}>
+          {isNonMobileScreens ? (
+            <>
+              {/* MENUS */}
+              <Box
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                }}
+              >
                 <Button
-                  variant="outlined"
+                  onClick={handleCloseNavMenu}
                   sx={{
-                    border: "2px solid black",
+                    display: "block",
+                    pl: 2,
+                    pr: 2,
+                    textTransform: "none",
+                    fontSize: "1.12rem",
                     color: "black",
-                    "&:hover": {
-                      backgroundColor: "black",
-                      color: "white",
-                      border: "2px solid black",
-                    },
                   }}
+                  component="a"
+                  href="#"
                 >
-                  Login
+                  Home
                 </Button>
-              </Link>
-            ) : (
-              <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center" }}>
-                <Tooltip title="Open settings">
-                  <IconButton
-                    onClick={handleOpenUserMenu}
-                    sx={{ p: 0, ml: 2, mr: 1 }}
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    display: "block",
+                    pl: 2,
+                    pr: 2,
+                    ml: 2,
+                    textTransform: "none",
+                    fontSize: "1.12rem",
+                    color: "black",
+                  }}
+                  component="a"
+                  href="#categories"
+                >
+                  Categories
+                </Button>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    display: "block",
+                    pl: 2,
+                    pr: 2,
+                    ml: 2,
+                    textTransform: "none",
+                    fontSize: "1.12rem",
+                    color: "black",
+                  }}
+                  component="a"
+                  href="#trending"
+                >
+                  Trending
+                </Button>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    display: "block",
+                    pl: 2,
+                    pr: 2,
+                    ml: 2,
+                    textTransform: "none",
+                    fontSize: "1.12rem",
+                    color: "black",
+                  }}
+                  component="a"
+                  href="#contactUs"
+                >
+                  Contact Us
+                </Button>
+              </Box>
+
+              <Typography
+                component="a"
+                href="/"
+                variant="h4"
+                fontWeight="bold"
+                color="black"
+                sx={{ textDecoration: "none" }}
+              >
+                LUDU
+              </Typography>
+
+              <Box
+                sx={{
+                  flexGrow: 0,
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <SearchBox />
+                <IconButton aria-label="cart" sx={{ marginRight: "1rem" }}>
+                  <Link to="/cart">
+                    <Badge
+                      badgeContent={cart.cartItems.reduce(
+                        (a, c) => a + c.quantity,
+                        0
+                      )}
+                      color="error"
+                    >
+                      <ShoppingBagOutlined sx={{ color: "black" }} />
+                    </Badge>
+                  </Link>
+                </IconButton>
+
+                {/* logged in */}
+                {!user ? (
+                  <Link to="/signin" style={{ textDecoration: "none" }}>
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        border: "2px solid black",
+                        color: "black",
+                        "&:hover": {
+                          backgroundColor: "black",
+                          color: "white",
+                          border: "2px solid black",
+                        },
+                      }}
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                ) : (
+                  <Box
+                    sx={{ flexGrow: 0, display: "flex", alignItems: "center" }}
                   >
-                    <Avatar
-                      {...stringAvatar(user.name)}
-                      sx={{ backgroundColor: "black" }}
-                    />
-                  </IconButton>
-                </Tooltip>
-                <Typography>{user.name}</Typography>
+                    <Tooltip title="Open settings">
+                      <IconButton
+                        onClick={handleOpenUserMenu}
+                        sx={{ p: 0, ml: 2, mr: 1 }}
+                      >
+                        <Avatar
+                          {...stringAvatar(user.name)}
+                          sx={{ backgroundColor: "black" }}
+                        />
+                      </IconButton>
+                    </Tooltip>
+                    <Typography>{user.name}</Typography>
+                    <Menu
+                      sx={{ mt: "45px" }}
+                      id="menu-appbar"
+                      anchorEl={anchorElUser}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      open={Boolean(anchorElUser)}
+                      onClose={handleCloseUserMenu}
+                    >
+                      <MenuItem
+                        sx={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <Avatar
+                          {...stringAvatar(user.name)}
+                          sx={{
+                            backgroundColor: "black",
+                            width: "200px",
+                            height: "200px",
+                          }}
+                        />
+                      </MenuItem>
+                      <Divider />
+                      <MenuItem onClick={() => navigate("/profile")}>
+                        <Typography textAlign="center">Profile</Typography>
+                      </MenuItem>
+                      <MenuItem onClick={() => navigate("/orderHistory")}>
+                        <Typography textAlign="center">
+                          Order History
+                        </Typography>
+                      </MenuItem>
+                      <MenuItem onClick={handleLogout}>
+                        <Typography textAlign="center">Logout</Typography>
+                      </MenuItem>
+                      {user.isAdmin && (
+                        <>
+                          <Divider />
+                          <MenuItem
+                            onClick={() => navigate("/admin/dashboard")}
+                          >
+                            <Typography textAlign="center">
+                              Dashboard
+                            </Typography>
+                          </MenuItem>
+                          <MenuItem onClick={() => navigate("/admin/products")}>
+                            <Typography textAlign="center">
+                              Product List
+                            </Typography>
+                          </MenuItem>
+                          <MenuItem onClick={() => navigate("/admin/users")}>
+                            <Typography textAlign="center">
+                              User List
+                            </Typography>
+                          </MenuItem>
+                          <MenuItem onClick={() => navigate("/admin/orders")}>
+                            <Typography textAlign="center">
+                              Order List
+                            </Typography>
+                          </MenuItem>
+                        </>
+                      )}
+                      <Divider />
+                      <Typography
+                        sx={{
+                          alignItems: "center",
+                          display: "flex",
+                          justifyContent: "center",
+                          p: "0.2rem",
+                        }}
+                      >
+                        <LocalAtmIcon />
+                        {cartItems.reduce(
+                          (a, c) => a + c.price * c.quantity,
+                          0
+                        )}
+                      </Typography>
+                    </Menu>
+                  </Box>
+                )}
+              </Box>
+            </>
+          ) : (
+            <>
+              {/* MOBILE MENUS */}
+              <Box
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                }}
+              >
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    display: "block",
+                    pl: 2,
+                    pr: 2,
+                    textTransform: "none",
+                    fontSize: "1.12rem",
+                    color: "black",
+                  }}
+                  component="a"
+                  href="#"
+                >
+                  Home
+                </Button>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    display: "block",
+                    pl: 2,
+                    pr: 2,
+                    ml: 2,
+                    textTransform: "none",
+                    fontSize: "1.12rem",
+                    color: "black",
+                  }}
+                  component="a"
+                  href="#categories"
+                >
+                  Categories
+                </Button>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    display: "block",
+                    pl: 2,
+                    pr: 2,
+                    ml: 2,
+                    textTransform: "none",
+                    fontSize: "1.12rem",
+                    color: "black",
+                  }}
+                  component="a"
+                  href="#trending"
+                >
+                  Trending
+                </Button>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    display: "block",
+                    pl: 2,
+                    pr: 2,
+                    ml: 2,
+                    textTransform: "none",
+                    fontSize: "1.12rem",
+                    color: "black",
+                  }}
+                  component="a"
+                  href="#contactUs"
+                >
+                  Contact Us
+                </Button>
+              </Box>
+
+              <Typography
+                component="a"
+                href="/"
+                variant="h4"
+                fontWeight="bold"
+                color="black"
+                sx={{ textDecoration: "none" }}
+              >
+                LUDU
+              </Typography>
+
+              <Box
+                sx={{
+                  flexGrow: 0,
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <IconButton aria-label="cart" sx={{ marginRight: "1rem" }}>
+                  <Link to="/cart">
+                    <Badge
+                      badgeContent={cart.cartItems.reduce(
+                        (a, c) => a + c.quantity,
+                        0
+                      )}
+                      color="error"
+                    >
+                      <ShoppingBagOutlined sx={{ color: "black" }} />
+                    </Badge>
+                  </Link>
+                </IconButton>
+
+                {/* logged in */}
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
+                >
+                  <MenuOutlined />
+                </IconButton>
                 <Menu
-                  sx={{ mt: "45px" }}
                   id="menu-appbar"
-                  anchorEl={anchorElUser}
+                  anchorEl={anchorElNav}
                   anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
+                    vertical: "bottom",
+                    horizontal: "left",
                   }}
                   keepMounted
                   transformOrigin={{
                     vertical: "top",
-                    horizontal: "right",
+                    horizontal: "left",
                   }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{
+                    display: { xs: "block", md: "none" },
+                  }}
                 >
+                  <MenuItem>
+                    {!user ? (
+                      <Link to="/signin" style={{ textDecoration: "none" }}>
+                        <Button
+                          variant="outlined"
+                          sx={{
+                            border: "2px solid black",
+                            color: "black",
+                            "&:hover": {
+                              backgroundColor: "black",
+                              color: "white",
+                              border: "2px solid black",
+                            },
+                          }}
+                        >
+                          Login
+                        </Button>
+                      </Link>
+                    ) : (
+                      <Box
+                        sx={{
+                          flexGrow: 0,
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Tooltip title="Open settings">
+                          <IconButton
+                            onClick={handleOpenUserMenu}
+                            sx={{ p: 0, ml: 2, mr: 1 }}
+                          >
+                            <Avatar
+                              {...stringAvatar(user.name)}
+                              sx={{ backgroundColor: "black" }}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                        <Typography>{user.name}</Typography>
+                        <Menu
+                          sx={{ mt: "45px" }}
+                          id="menu-appbar"
+                          anchorEl={anchorElUser}
+                          anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                          }}
+                          keepMounted
+                          transformOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                          }}
+                          open={Boolean(anchorElUser)}
+                          onClose={handleCloseUserMenu}
+                        >
+                          <MenuItem
+                            sx={{ display: "flex", justifyContent: "center" }}
+                          >
+                            <Avatar
+                              {...stringAvatar(user.name)}
+                              sx={{
+                                backgroundColor: "black",
+                                width: "200px",
+                                height: "200px",
+                              }}
+                            />
+                          </MenuItem>
+                          <Divider />
+                          <MenuItem onClick={() => navigate("/profile")}>
+                            <Typography textAlign="center">Profile</Typography>
+                          </MenuItem>
+                          <MenuItem onClick={() => navigate("/orderHistory")}>
+                            <Typography textAlign="center">
+                              Order History
+                            </Typography>
+                          </MenuItem>
+                          <MenuItem onClick={handleLogout}>
+                            <Typography textAlign="center">Logout</Typography>
+                          </MenuItem>
+                          <Divider />
+                          <Typography
+                            sx={{
+                              alignItems: "center",
+                              display: "flex",
+                              justifyContent: "center",
+                              p: "0.2rem",
+                            }}
+                          >
+                            <LocalAtmIcon />
+                            {cartItems.reduce(
+                              (a, c) => a + c.price * c.quantity,
+                              0
+                            )}
+                          </Typography>
+                        </Menu>
+                      </Box>
+                    )}
+                  </MenuItem>
+
+                  {!user.isAdmin && (
+                    <>
+                      <Divider />
+                      <MenuItem>Home</MenuItem>
+                      <MenuItem>Categories</MenuItem>
+                      <MenuItem>Trending</MenuItem>
+                      <MenuItem>Contact Us</MenuItem>
+                    </>
+                  )}
+                  {user.isAdmin && (
+                    <>
+                      <Divider />
+                      <MenuItem onClick={() => navigate("/admin/dashboard")}>
+                        <Typography textAlign="center">Dashboard</Typography>
+                      </MenuItem>
+                      <MenuItem onClick={() => navigate("/admin/products")}>
+                        <Typography textAlign="center">Product List</Typography>
+                      </MenuItem>
+                      <MenuItem onClick={() => navigate("/admin/orders")}>
+                        <Typography textAlign="center">Order List</Typography>
+                      </MenuItem>
+                      <MenuItem onClick={() => navigate("/admin/users")}>
+                        <Typography textAlign="center">User List</Typography>
+                      </MenuItem>
+                    </>
+                  )}
+                  <Divider />
                   <MenuItem sx={{ display: "flex", justifyContent: "center" }}>
-                    <Avatar
-                      {...stringAvatar(user.name)}
+                    <Typography
                       sx={{
-                        backgroundColor: "black",
-                        width: "200px",
-                        height: "200px",
+                        alignItems: "center",
+                        display: "flex",
+                        p: "0.2rem",
                       }}
-                    />
+                    >
+                      <LocalAtmIcon />
+                      {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
+                    </Typography>
                   </MenuItem>
-                  <Divider />
-                  <MenuItem onClick={() => navigate("/profile")}>
-                    <Typography textAlign="center">Profile</Typography>
-                  </MenuItem>
-                  <MenuItem onClick={() => navigate("/orderHistory")}>
-                    <Typography textAlign="center">Order History</Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handleLogout}>
-                    <Typography textAlign="center">Logout</Typography>
-                  </MenuItem>
-                  <Divider />
-                  <Typography
-                    sx={{
-                      alignItems: "center",
-                      display: "flex",
-                      justifyContent: "center",
-                      p: "0.2rem",
-                    }}
-                  >
-                    <LocalAtmIcon />
-                    {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
-                  </Typography>
                 </Menu>
               </Box>
-            )}
-          </Box>
+            </>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

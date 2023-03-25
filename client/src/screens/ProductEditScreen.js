@@ -29,6 +29,7 @@ import {
   Input,
 } from "@mui/material";
 import Breadcrumbs from "../components/Breadcrumbs";
+import { CheckCircleOutline } from "@mui/icons-material";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -98,7 +99,17 @@ export default function ProductEditScreen() {
       dispatch({
         type: "UPDATE_SUCCESS",
       });
-      toast.success("Product updated successfully");
+      toast.success("Updated product successfully", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: "dark",
+        icon: <CheckCircleOutline color="white" />,
+        toastId: "submitHandler",
+      });
       navigate("/admin/products");
     } catch (err) {
       toast.error(getError(err));
@@ -126,7 +137,17 @@ export default function ProductEditScreen() {
       });
       dispatch({ type: "UPLOAD_SUCCESS" });
 
-      toast.success("Image uploaded successfully");
+      toast.success("Uploaded image successfully", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: "dark",
+        icon: <CheckCircleOutline color="white" />,
+        toastId: "uploadFileHandler",
+      });
       setImage(data.secure_url);
     } catch (err) {
       toast.error(getError(err));

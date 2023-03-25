@@ -4,14 +4,27 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { getError } from "../utils";
 import { Helmet } from "react-helmet-async";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Rating from "../components/Rating";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Button from "react-bootstrap/Button";
 import LinkContainer from "react-router-bootstrap/LinkContainer";
-import { Box, Grid } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Paper,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  IconButton,
+  Stack,
+  Pagination,
+} from "@mui/material";
+import { NavigateNextOutlined, CancelOutlined } from "@mui/icons-material";
 import ProductCard from "../components/ProductCard";
 
 const reducer = (state, action) => {
@@ -37,38 +50,39 @@ const reducer = (state, action) => {
 
 const prices = [
   {
-    name: "$1 to $50",
+    name: "1 to 50",
     value: "1-50",
   },
   {
-    name: "$51 to $200",
+    name: "51 to 200",
     value: "51-200",
   },
   {
-    name: "$201 to $1000",
+    name: "201 to 1000",
     value: "201-1000",
   },
 ];
 
 export const ratings = [
   {
-    name: "4stars & up",
-    rating: 4,
+    name: "stars & up",
+    rating: 0,
   },
-
   {
-    name: "3stars & up",
-    rating: 3,
+    name: "1stars & up",
+    rating: 1,
   },
-
   {
     name: "2stars & up",
     rating: 2,
   },
-
   {
-    name: "1stars & up",
-    rating: 1,
+    name: "3stars & up",
+    rating: 3,
+  },
+  {
+    name: "4stars & up",
+    rating: 4,
   },
 ];
 
@@ -82,6 +96,24 @@ export default function SearchScreen() {
   const rating = sp.get("rating") || "all";
   const order = sp.get("order") || "newest";
   const page = sp.get("page") || 1;
+
+  const [crrP, setcrrP] = useState(1);
+  const handleChange = (event, value) => {
+    setcrrP(value);
+  };
+  const noProductFound = () => {
+    if (crrP !== 0) {
+      setcrrP(0);
+    }
+  };
+
+  useEffect(() => {
+    if (crrP > 0) {
+      navigate(`?${getFilterUrl({ page: crrP }, true)}`);
+    } else {
+      navigate(`/search`);
+    }
+  }, [crrP]);
 
   const [{ loading, error, products, pages, countProducts }, dispatch] =
     useReducer(reducer, {
@@ -137,130 +169,162 @@ export default function SearchScreen() {
       </Helmet>
       <Box>
         <Grid container spacing="2">
-          <Grid item xs={4}>
-            <h3>Department</h3>
-            <div>
-              <ul>
-                <li>
-                  <Link
-                    className={"all" === category ? "text-bold" : ""}
-                    to={getFilterUrl({ category: "all" })}
-                  >
-                    Any
-                  </Link>
-                </li>
-                {categories.map((c) => (
-                  <li key={c}>
-                    <Link
-                      className={c === category ? "text-bold" : ""}
-                      to={getFilterUrl({ category: c })}
-                    >
-                      {c}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3>Price</h3>
-              <ul>
-                <li>
-                  <Link
-                    className={"all" === price ? "text-bold" : ""}
-                    to={getFilterUrl({ price: "all" })}
-                  >
-                    Any
-                  </Link>
-                </li>
-                {prices.map((p) => (
-                  <li key={p.value}>
-                    <Link
-                      to={getFilterUrl({ price: p.value })}
-                      className={p.value === price ? "text-bold" : ""}
-                    >
-                      {p.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3>Avg. Customer Review</h3>
-              <ul>
-                {ratings.map((r) => (
-                  <li key={r.name}>
-                    <Link
-                      to={getFilterUrl({ rating: r.rating })}
-                      className={
-                        `${r.rating}` === `${rating}` ? "text-bold" : ""
-                      }
-                    >
-                      <Rating caption={" & up"} rating={r.rating}></Rating>
-                    </Link>
-                  </li>
-                ))}
-                <li>
-                  <Link
-                    to={getFilterUrl({ rating: "all" })}
-                    className={rating === "all" ? "text-bold" : ""}
-                  >
-                    <Rating caption={" & up"} rating={0}></Rating>
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <Row className="justify-content-between mb-3">
-              <Col md={6}>
-                <div>
-                  {countProducts === 0 ? "No" : countProducts} Results
-                  {query !== "all" && " : " + query}
-                  {category !== "all" && " : " + category}
-                  {price !== "all" && " : Price " + price}
-                  {rating !== "all" && " : Rating " + rating + " & up"}
-                  {query !== "all" ||
-                  category !== "all" ||
-                  rating !== "all" ||
-                  price !== "all" ? (
-                    <Button variant="light" onClick={() => navigate("/search")}>
-                      <i className="fas fa-times-circle"></i>
-                    </Button>
-                  ) : null}
-                </div>
-              </Col>
-              <Col className="text-end">
-                Sort by{" "}
-                <select
-                  value={order}
-                  onChange={(e) => {
-                    navigate(getFilterUrl({ order: e.target.value }));
-                  }}
+          <Grid item xs={12} sm={3}>
+            <Paper>
+              <Box display="flex" flexDirection="column" gap={0.2} padding={2}>
+                <Box>
+                  <h3>Department</h3>
+                  <ul style={{ listStyle: "none", padding: 0 }}>
+                    <li>
+                      <ListItem
+                        button
+                        component={Link}
+                        to={getFilterUrl({ category: "all" })}
+                        style={{ padding: 0 }}
+                      >
+                        <ListItemIcon sx={{ minWidth: "unset", mr: "1rem" }}>
+                          <NavigateNextOutlined />
+                        </ListItemIcon>
+                        <ListItemText primary="Any" />
+                      </ListItem>
+                    </li>
+                    {categories.map((c) => (
+                      <ListItem
+                        key={c}
+                        button
+                        component={Link}
+                        to={getFilterUrl({ category: c })}
+                        style={{ padding: 0 }}
+                      >
+                        <ListItemIcon sx={{ minWidth: "unset", mr: "1rem" }}>
+                          <NavigateNextOutlined />
+                        </ListItemIcon>
+                        <ListItemText primary={c} />
+                      </ListItem>
+                    ))}
+                  </ul>
+                </Box>
+                <Box>
+                  <h3>Price</h3>
+                  <ul style={{ listStyle: "none", padding: 0 }}>
+                    <li>
+                      <ListItem
+                        button
+                        component={Link}
+                        to={getFilterUrl({ price: "all" })}
+                        style={{ padding: 0 }}
+                      >
+                        <ListItemIcon sx={{ minWidth: "unset", mr: "1rem" }}>
+                          <NavigateNextOutlined />
+                        </ListItemIcon>
+                        <ListItemText primary="Any" />
+                      </ListItem>
+                    </li>
+                    {prices.map((p) => (
+                      <li key={p.value}>
+                        <ListItem
+                          button
+                          component={Link}
+                          to={getFilterUrl({ price: p.value })}
+                          style={{ padding: 0 }}
+                        >
+                          <ListItemIcon sx={{ minWidth: "unset", mr: "1rem" }}>
+                            <NavigateNextOutlined />
+                          </ListItemIcon>
+                          <ListItemText primary={p.name} />
+                        </ListItem>
+                      </li>
+                    ))}
+                  </ul>
+                </Box>
+                <Box>
+                  <h3>Avg. Customer Review</h3>
+                  <ul style={{ listStyle: "none" }}>
+                    {ratings.map((r) => (
+                      <li key={r.name}>
+                        <ListItem
+                          button
+                          component={Link}
+                          to={getFilterUrl({ rating: r.rating })}
+                          style={{ padding: 0 }}
+                        >
+                          <Rating caption={" & up"} rating={r.rating}></Rating>
+                        </ListItem>
+                      </li>
+                    ))}
+                  </ul>
+                </Box>
+                <Box
+                  sx={{ p: "1rem", display: "flex", justifyContent: "center" }}
                 >
-                  <option value="newest">Newest Arrivals</option>
-                  <option value="lowest">Price: Low to High</option>
-                  <option value="highest">Price: High to Low</option>
-                  <option value="toprated">Avg. Customer Reviews</option>
-                </select>
-              </Col>
-            </Row>
+                  <Box>
+                    <InputLabel
+                      id="order-select-label"
+                      sx={{ fontSize: "0.8rem" }}
+                    >
+                      Sort By
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        {countProducts === 0 ? "No" : countProducts} Results
+                        {query !== "all" && " : " + query}
+                        {category !== "all" && " : " + category}
+                        {price !== "all" && " : Price " + price}
+                        {rating !== "all" && " : Rating " + rating + " & up"}
+                        {query !== "all" ||
+                        category !== "all" ||
+                        rating !== "all" ||
+                        price !== "all" ? (
+                          <IconButton
+                            onClick={() => navigate("/search")}
+                            component="label"
+                            sx={{
+                              "&:hover": { color: "#4d4d4d" },
+                            }}
+                          >
+                            <CancelOutlined />
+                          </IconButton>
+                        ) : null}
+                      </Box>
+                    </InputLabel>
+                    <FormControl>
+                      <Select
+                        labelId="order-select-label"
+                        id="order-select"
+                        value={order}
+                        onChange={(e) => {
+                          navigate(getFilterUrl({ order: e.target.value }));
+                        }}
+                      >
+                        <MenuItem value="newest">Newest Arrivals</MenuItem>
+                        <MenuItem value="lowest">Price: Low to High</MenuItem>
+                        <MenuItem value="highest">Price: High to Low</MenuItem>
+                        <MenuItem value="toprated">
+                          Avg. Customer Reviews
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Box>
+                </Box>
+              </Box>
+            </Paper>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12} sm={9}>
             {loading ? (
               <LoadingBox></LoadingBox>
             ) : error ? (
               <MessageBox variant="danger">{error}</MessageBox>
             ) : (
               <>
-                {products.leng === 0 && (
-                  <MessageBox>No Product Found</MessageBox>
+                {products.length === 0 && (
+                  <Box
+                    sx={{ display: "flex", justifyContent: "center", mt: 30 }}
+                  >
+                    No product found
+                    {noProductFound()}
+                  </Box>
                 )}
-
-                <Grid
-                  container
-                  rowSpacing="20"
-                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                >
+                <Grid container rowSpacing="20">
                   {products.map((product) => (
-                    <Grid item xs={6} key={product._id}>
+                    <Grid item xs={12} md={4} key={product._id}>
                       <ProductCard
                         key={product.name}
                         name={product.name}
@@ -275,25 +339,14 @@ export default function SearchScreen() {
                   ))}
                 </Grid>
 
-                <div>
-                  {[...Array(pages).keys()].map((x) => (
-                    <LinkContainer
-                      key={x + 1}
-                      className="mx-1"
-                      to={{
-                        pathname: "/search",
-                        seacrh: getFilterUrl({ page: x + 1 }, true),
-                      }}
-                    >
-                      <Button
-                        className={Number(page) === x + 1 ? "text-bold" : ""}
-                        variant="light"
-                      >
-                        {x + 1}
-                      </Button>
-                    </LinkContainer>
-                  ))}
-                </div>
+                <Stack spacing={2} mt="2rem">
+                  <Pagination
+                    count={pages}
+                    page={crrP}
+                    onChange={handleChange}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  />
+                </Stack>
               </>
             )}
           </Grid>
