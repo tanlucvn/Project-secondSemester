@@ -176,7 +176,7 @@ const TrendingNow = () => {
             <Typography variant="h4">Trending Now</Typography>
             <Box ref={refSlider}>
               <Slider {...setting}>
-                {products.map((product) => {
+                {Array.isArray(products) && products.map((product) => {
                   return (
                     <ProductCard
                       key={product.name}
