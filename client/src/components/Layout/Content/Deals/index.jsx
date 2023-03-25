@@ -172,7 +172,7 @@ const DealsOfDay = () => {
               <>
                 <Box ref={refSlider}>
                   <Slider {...setting}>
-                    {products.map((product, index) => {
+                    {Array.isArray(products) && products.map((product, index) => {
                       return (
                         <Box key={index} sx={{ p: 2 }}>
                           <Card
