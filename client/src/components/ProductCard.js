@@ -58,18 +58,18 @@ const ProductCard = ({
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      dispatch({ type: "FETCH_REQUEST" });
-      try {
-        const result = await axios.get("https://ludustore2.onrender.com/api/products");
-        dispatch({ type: "FETCH_SUCCESS", payload: result.data });
-      } catch (err) {
-        dispatch({ type: "FETCH_FAIL", payload: err.message });
-      }
-    };
-    fetchData();
-  }, []);
+useEffect(() => {
+  const fetchData = async () => {
+    dispatch({ type: "FETCH_REQUEST" });
+    try {
+      const result = await axios.get("/api/products", { headers: { Accept: 'application/json' }});
+      dispatch({ type: "FETCH_SUCCESS", payload: result.data });
+    } catch (err) {
+      dispatch({ type: "FETCH_FAIL", payload: err.message });
+    }
+  };
+  fetchData();
+}, []);
 
   const addToCartHandler = async (items) => {
     const existItem = cart.cartItems.find((x) => x._id === items);
