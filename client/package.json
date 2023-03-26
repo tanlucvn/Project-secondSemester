@@ -1,7 +1,6 @@
 {
   "name": "frontend",
   "proxy": "https://ludustore2.onrender.com/",
-  "homepage": "https://ludustore2.onrender.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
