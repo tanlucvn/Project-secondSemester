@@ -38,6 +38,14 @@ app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 
 const __dirname = path.resolve();
+// Serve the static assets
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Catch-all route that returns the same HTML file for all URLs
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
